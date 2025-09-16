@@ -45,12 +45,22 @@ new class extends Component {
     }
 }; ?>
 
-<div>
-    <flux:modal.trigger name="create-link">
-        <flux:button>
-            {{ __('Create Link') }}
-        </flux:button>
-    </flux:modal.trigger>
+<x-slot:breadcrumbs>
+    <flux:breadcrumbs>
+        <flux:breadcrumbs.item>{{ __('Links') }}</flux:breadcrumbs.item>
+    </flux:breadcrumbs>
+</x-slot:breadcrumbs>
+
+<div class="space-y-8">
+    <div class="flex items-end justify-between gap-4">
+        <flux:heading size="xl">{{ __('Links') }}</flux:heading>
+
+        <flux:modal.trigger name="create-link">
+            <flux:button variant="primary" class="-my-1">
+                {{ __('Create Link') }}
+            </flux:button>
+        </flux:modal.trigger>
+    </div>
 
     <flux:modal name="create-link" class="md:w-96">
         <form wire:submit="createLink">
