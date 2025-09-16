@@ -26,17 +26,26 @@ new class extends Component {
     }
 }; ?>
 
-<form wire:submit="createLink">
-    <flux:input
-        name="destination_url"
-        type="url"
-        :label="__('Destination URL')"
-        :placeholder="__('Paste your long URL here')"
-        wire:model.defer="destination_url"
-        required
-    />
-    <flux:error name="destination_url" />
-    <flux:button type="submit">
-        {{ __('Create Link') }}
-    </flux:button>
-</form>
+<div>
+    <flux:modal.trigger name="create-link">
+        <flux:button>
+            {{ __('Create Link') }}
+        </flux:button>
+    </flux:modal.trigger>
+
+    <flux:modal name="create-link" variant="default" dismissible="true">
+        <form wire:submit="createLink">
+            <flux:input
+                wire:model="destination_url"
+                name="destination_url"
+                type="url"
+                :label="__('Destination URL')"
+                :placeholder="__('Paste your long URL here')"
+                required
+            />
+            <flux:button type="submit">
+                {{ __('Create Link') }}
+            </flux:button>
+        </form>
+    </flux:modal>
+</div>
