@@ -36,7 +36,7 @@ new class extends Component {
 
         $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,
-            'slug' => $this->slug ?? null,
+            'slug' => $this->slug,
         ]);
 
         $this->reset('destination_url', 'slug', 'use_custom_slug');
