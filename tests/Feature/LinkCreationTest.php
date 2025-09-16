@@ -8,15 +8,17 @@ uses(RefreshDatabase::class);
 
 it('allows a user to create a shortened link with a valid destination URL', function () {
     $user = User::factory()->withPersonalOrganizationAndSubscription()->create();
+    $organization = $user->currentOrganization();
 
     Volt::actingAs($user)->test('links')
         ->set('destination_url', 'https://example.com')
         ->call('createLink')
         ->assertHasNoErrors();
 
-    tap(Link::first(), function ($link) {
+    tap(Link::first(), function ($link) use ($organization) {
         expect($link)->not->toBeNull();
         expect($link->destination_url)->toBe('https://example.com');
+        expect($link->organization->is($organization))->toBeTrue();
     });
 });
 
