@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Link;
+use Sqids\Sqids;
+
 
 class LinkRedirectController extends Controller
 {
-    public function __invoke($id)
+    public function __invoke($hash)
     {
-        $link = \App\Models\Link::find($id);
-        if (! $link) {
-            abort(404);
-        }
+        $id = (new Sqids())->decode($hash)[0] ?? null;
+
+        $link = Link::findOrFail($id);
+
         return redirect()->away($link->destination_url);
     }
 }

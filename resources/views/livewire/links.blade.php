@@ -86,9 +86,9 @@ new class extends Component {
         <flux:table.rows>
             @foreach ($this->links as $link)
                 <flux:table.row>
-                    <flux:table.cell>
-                        {{ url('/l/' . $link->id) }}
-                    </flux:table.cell>
+                <flux:table.cell>
+                    {{ url('/l/' . $link->hashed_id) }}
+                </flux:table.cell>
                     <flux:table.cell>
                         {{ $link->destination_url }}
                     </flux:table.cell>
