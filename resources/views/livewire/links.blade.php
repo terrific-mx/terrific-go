@@ -36,6 +36,7 @@ new class extends Component {
         $this->reset('destination_url');
 
         Flux::modal('create-link')->close();
+
         Flux::toast(
             heading: __('Link created'),
             text: __('Your link was successfully created.'),
@@ -51,19 +52,28 @@ new class extends Component {
         </flux:button>
     </flux:modal.trigger>
 
-    <flux:modal name="create-link" variant="default" dismissible="true">
+    <flux:modal name="create-link" class="md:w-96">
         <form wire:submit="createLink">
-            <flux:input
-                wire:model="destination_url"
-                name="destination_url"
-                type="url"
-                :label="__('Destination URL')"
-                :placeholder="__('Paste your long URL here')"
-                required
-            />
-            <flux:button type="submit">
-                {{ __('Create Link') }}
-            </flux:button>
+            <div class="space-y-6">
+                <div>
+                    <flux:heading size="lg">{{ __('Create Link') }}</flux:heading>
+                    <flux:text class="mt-2">{{ __('Paste a long URL below to create a short link for your organization.') }}</flux:text>
+                </div>
+                <flux:input
+                    wire:model="destination_url"
+                    name="destination_url"
+                    type="url"
+                    :label="__('Destination URL')"
+                    :placeholder="__('Paste your long URL here')"
+                    required
+                />
+                <div class="flex">
+                    <flux:spacer />
+                    <flux:button type="submit" variant="primary">
+                        {{ __('Create Link') }}
+                    </flux:button>
+                </div>
+            </div>
         </form>
     </flux:modal>
 
