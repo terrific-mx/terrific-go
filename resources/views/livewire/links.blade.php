@@ -36,6 +36,11 @@ new class extends Component {
         $this->reset('destination_url');
 
         Flux::modal('create-link')->close();
+        Flux::toast(
+            heading: __('Link created'),
+            text: __('Your link was successfully created.'),
+            variant: 'success'
+        );
     }
 }; ?>
 

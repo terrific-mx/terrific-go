@@ -116,5 +116,7 @@
   "Paste your long URL here": "Pega tu URL larga aquí",
   "Create Link": "Crear enlace",
   "Short Link": "Enlace corto",
-  "Created At": "Creado el"
+  "Created At": "Creado el",
+  "Link created": "Enlace creado",
+  "Your link was successfully created.": "Tu enlace se creó correctamente."
 }
