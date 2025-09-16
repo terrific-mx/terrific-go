@@ -48,3 +48,17 @@ it('validates that the destination url is a valid url', function () {
         ->call('createLink')
         ->assertHasErrors(['destination_url']);
 });
+
+it('redirects the short link URL to the destination URL', function () {
+    $link = Link::factory()->create([
+        'destination_url' => 'https://example.com',
+    ]);
+
+    $response = $this->get("/l/{$link->id}");
+    $response->assertRedirect('https://example.com');
+});
+
+it('returns a 404 for a non-existent short link', function () {
+    $response = $this->get('/l/999999');
+    $response->assertStatus(404);
+});
