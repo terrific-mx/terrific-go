@@ -12,17 +12,9 @@ new class extends Component {
     public string $destination_url = '';
 
     public bool $use_custom_slug = false;
-    public ?string $slug = null;
 
-    public function rules(): array
-    {
-        return [
-            'destination_url' => 'required|url',
-            'slug' => $this->use_custom_slug
-                ? 'required|string|alpha_dash|unique:links,slug'
-                : 'nullable|string|alpha_dash|unique:links,slug',
-        ];
-    }
+    #[Validate('required_if:use_custom_slug,true|nullable|string|alpha_dash|unique:links,slug')]
+    public ?string $slug = null;
 
     #[Computed]
     public function currentOrganization()
