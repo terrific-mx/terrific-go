@@ -5,7 +5,15 @@ use App\Models\User;
 use App\Models\Link;
 use Livewire\Volt\Volt;
 
+use function Pest\Laravel\actingAs;
+
 uses(RefreshDatabase::class);
+
+it('allows an authenticated user to access the /links path', function () {
+    $user = User::factory()->withPersonalOrganizationAndSubscription()->create();
+
+    actingAs($user)->get('/links')->assertStatus(200);
+});
 
 it('allows a user to create a shortened link with a valid destination URL', function () {
     $user = User::factory()->withPersonalOrganizationAndSubscription()->create();
