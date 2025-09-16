@@ -1,5 +1,6 @@
 <?php
 
+use Flux\Flux;
 use Livewire\Volt\Component;
 
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,8 @@ new class extends Component {
         ]);
 
         $this->reset('destination_url');
-        $this->dispatch('close-modal', name: 'create-link');
+
+        Flux::modal('create-link')->close();
     }
 }; ?>
 
