@@ -83,9 +83,8 @@ new class extends Component {
                     :placeholder="__('Paste your long URL here')"
                     required
                 />
-                <flux:checkbox
+                <flux:switch
                     wire:model="use_custom_slug"
-                    name="use_custom_slug"
                     :label="__('Use custom slug?')"
                 />
                 <flux:input
