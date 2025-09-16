@@ -16,6 +16,14 @@ new class extends Component {
         return Auth::user()->currentOrganization()->first();
     }
 
+    #[Computed]
+    public function links()
+    {
+        return $this->currentOrganization
+            ? $this->currentOrganization->links()->latest()->paginate(10)
+            : collect();
+    }
+
     public function createLink()
     {
         $this->validate();
@@ -49,14 +57,14 @@ new class extends Component {
         </form>
     </flux:modal>
 
-    <flux:table>
+    <flux:table :paginate="$this->links">
         <flux:table.columns>
             <flux:table.column>{{ __('Short Link') }}</flux:table.column>
             <flux:table.column>{{ __('Destination URL') }}</flux:table.column>
             <flux:table.column>{{ __('Created At') }}</flux:table.column>
         </flux:table.columns>
         <flux:table.rows>
-            @foreach ($this->currentOrganization->links as $link)
+            @foreach ($this->links as $link)
                 <flux:table.row>
                     <flux:table.cell>
                         {{ url('/l/' . $link->id) }}
