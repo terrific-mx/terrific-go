@@ -9,6 +9,7 @@
 
             <flux:sidebar.nav>
                 <flux:sidebar.item icon="home" :href="route('dashboard')" wire:navigate>{{ __('Dashboard') }}</flux:sidebar.item>
+                <flux:sidebar.item icon="link" :href="route('links.index')" wire:navigate>{{ __('Links') }}</flux:sidebar.item>
             </flux:sidebar.nav>
 
             @can('update', auth()->user()->currentOrganization)
