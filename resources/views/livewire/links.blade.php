@@ -31,6 +31,9 @@ new class extends Component {
         $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,
         ]);
+
+        $this->reset('destination_url');
+        $this->dispatch('close-modal', name: 'create-link');
     }
 }; ?>
 
