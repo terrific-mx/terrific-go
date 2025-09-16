@@ -83,18 +83,22 @@ new class extends Component {
                     :placeholder="__('Paste your long URL here')"
                     required
                 />
-                <flux:switch
-                    wire:model="use_custom_slug"
-                    :label="__('Custom slug')"
-                />
-                <flux:input
-                    wire:model="slug"
-                    name="slug"
-                    type="text"
-                    :label="__('Custom Slug')"
-                    :placeholder="__('e.g. my-link')"
-                    :disabled="!$this->use_custom_slug"
-                />
+                <div>
+                    <flux:switch
+                        wire:model="use_custom_slug"
+                        :label="__('Custom slug')"
+                    />
+                    <flux:field x-show="$wire.use_custom_slug" class="mt-2">
+                        <flux:input
+                            wire:model="slug"
+                            name="slug"
+                            type="text"
+                            :placeholder="__('e.g. my-link')"
+                            x-bind:disabled="!$wire.use_custom_slug"
+                        />
+                        <flux:error name="slug" />
+                    </flux:field>
+                </div>
                 <div class="flex">
                     <flux:spacer />
                     <flux:button type="submit" variant="primary">
