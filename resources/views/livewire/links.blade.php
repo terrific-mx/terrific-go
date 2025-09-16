@@ -85,7 +85,7 @@ new class extends Component {
                 />
                 <flux:switch
                     wire:model="use_custom_slug"
-                    :label="__('Use custom slug?')"
+                    :label="__('Custom slug')"
                 />
                 <flux:input
                     wire:model="slug"
