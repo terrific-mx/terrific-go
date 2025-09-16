@@ -12,8 +12,17 @@ new class extends Component {
     public string $destination_url = '';
 
     public bool $use_custom_slug = false;
-    #[Validate('nullable|string|alpha_dash|unique:links,slug')]
     public ?string $slug = null;
+
+    public function rules(): array
+    {
+        return [
+            'destination_url' => 'required|url',
+            'slug' => $this->use_custom_slug
+                ? 'required|string|alpha_dash|unique:links,slug'
+                : 'nullable|string|alpha_dash|unique:links,slug',
+        ];
+    }
 
     #[Computed]
     public function currentOrganization()
@@ -31,13 +40,7 @@ new class extends Component {
 
     public function createLink()
     {
-        $rules = [
-            'destination_url' => 'required|url',
-        ];
-        if ($this->use_custom_slug) {
-            $rules['slug'] = 'required|string|alpha_dash|unique:links,slug';
-        }
-        $this->validate($rules);
+        $this->validate();
 
         $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,

@@ -10,14 +10,11 @@ class LinkRedirectController extends Controller
 {
     public function __invoke($hash)
     {
-        $link = Link::where('slug', $hash)->first();
-        if (!$link) {
-            $id = (new Sqids())->decode($hash)[0] ?? null;
-            $link = $id ? Link::find($id) : null;
-        }
-        if (!$link) {
-            abort(404);
-        }
+        $link = Link::where('slug', $hash)->first()
+            ?? (Link::find((new Sqids())->decode($hash)[0] ?? null));
+
+        abort_if(!$link, 404);
+
         return redirect()->away($link->destination_url);
     }
 }
