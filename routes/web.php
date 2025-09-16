@@ -37,3 +37,13 @@ Route::middleware(['auth'])->group(function () {
 require __DIR__.'/auth.php';
 
 require __DIR__.'/billing.php';
+
+use App\Models\Link;
+
+Route::get('/l/{id}', function ($id) {
+    $link = Link::find($id);
+    if (! $link) {
+        abort(404);
+    }
+    return redirect()->away($link->destination_url);
+});
