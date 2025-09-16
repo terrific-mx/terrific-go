@@ -40,10 +40,4 @@ require __DIR__.'/billing.php';
 
 use App\Models\Link;
 
-Route::get('/l/{id}', function ($id) {
-    $link = Link::find($id);
-    if (! $link) {
-        abort(404);
-    }
-    return redirect()->away($link->destination_url);
-});
+Route::get('/l/{id}', \App\Http\Controllers\LinkRedirectController::class);
