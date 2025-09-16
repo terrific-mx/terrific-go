@@ -2,13 +2,14 @@
 
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use App\Models\User;
+use App\Models\Link;
 use Livewire\Volt\Volt;
 
 uses(RefreshDatabase::class);
 
 it('allows a user to create a shortened link with a valid destination URL', function () {
     $user = User::factory()->withPersonalOrganizationAndSubscription()->create();
-    $organization = $user->currentOrganization();
+    $organization = $user->currentOrganization;
 
     Volt::actingAs($user)->test('links')
         ->set('destination_url', 'https://example.com')
