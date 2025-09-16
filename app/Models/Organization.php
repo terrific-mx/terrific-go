@@ -16,6 +16,11 @@ class Organization extends Model
 
     protected $guarded = [];
 
+    public function links()
+    {
+        return $this->hasMany(Link::class);
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -2,28 +2,25 @@
 
 use Livewire\Volt\Component;
 
-use App\Models\Link;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\Rule;
+use Livewire\Attributes\Computed;
+use Livewire\Attributes\Validate;
 
 new class extends Component {
+    #[Validate('required|url')]
     public string $destination_url = '';
 
-    public function rules(): array
+    #[Computed]
+    public function currentOrganization()
     {
-        return [
-            'destination_url' => ['required', 'url'],
-        ];
+        return Auth::user()->currentOrganization()->first();
     }
 
     public function createLink()
     {
         $this->validate();
 
-        $organization = Auth::user()->currentOrganization()->first();
-
-        Link::create([
-            'organization_id' => $organization->id,
+        $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,
         ]);
     }
