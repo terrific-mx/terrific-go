@@ -8,10 +8,10 @@ use Livewire\Attributes\Computed;
 use Livewire\Attributes\Validate;
 
 new class extends Component {
+    public bool $use_custom_slug = false;
+
     #[Validate('required|url')]
     public string $destination_url = '';
-
-    public bool $use_custom_slug = false;
 
     #[Validate('required_if:use_custom_slug,true|nullable|string|alpha_dash|unique:links,slug')]
     public ?string $slug = null;
@@ -26,7 +26,7 @@ new class extends Component {
     public function links()
     {
         return $this->currentOrganization
-            ? $this->currentOrganization->links()->latest()->paginate(10)
+            ? $this->currentOrganization->links()->latest()->paginate(30)
             : collect();
     }
 
@@ -36,7 +36,7 @@ new class extends Component {
 
         $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,
-            'slug' => $this->use_custom_slug ? $this->slug : null,
+            'slug' => $this->slug ?? null,
         ]);
 
         $this->reset('destination_url', 'slug', 'use_custom_slug');
