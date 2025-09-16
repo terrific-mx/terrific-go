@@ -111,5 +111,8 @@
   "Invite someone to join your organization by sending them an invitation below.": "Invita a alguien a tu organización enviándole una invitación abajo.",
   "You": "Tú",
   "You need to subscribe to our service to continue.": "Necesitas suscribirte a nuestro servicio para continuar.",
-  "Proceed to Checkout": "Proceder al pago"
+  "Proceed to Checkout": "Proceder al pago",
+  "Destination URL": "URL de destino",
+  "Paste your long URL here": "Pega tu URL larga aquí",
+  "Create Link": "Crear enlace"
 }
