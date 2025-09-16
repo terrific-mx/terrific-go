@@ -88,7 +88,7 @@ new class extends Component {
                         wire:model="use_custom_slug"
                         :label="__('Custom slug')"
                     />
-                    <flux:field x-show="$wire.use_custom_slug" class="mt-2">
+                    <flux:field x-show="$wire.use_custom_slug" class="mt-3">
                         <flux:input
                             wire:model="slug"
                             name="slug"
