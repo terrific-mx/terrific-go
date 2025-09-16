@@ -114,5 +114,7 @@
   "Proceed to Checkout": "Proceder al pago",
   "Destination URL": "URL de destino",
   "Paste your long URL here": "Pega tu URL larga aquí",
-  "Create Link": "Crear enlace"
+  "Create Link": "Crear enlace",
+  "Short Link": "Enlace corto",
+  "Created At": "Creado el"
 }

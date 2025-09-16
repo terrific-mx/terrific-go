@@ -48,4 +48,27 @@ new class extends Component {
             </flux:button>
         </form>
     </flux:modal>
+
+    <flux:table>
+        <flux:table.columns>
+            <flux:table.column>{{ __('Short Link') }}</flux:table.column>
+            <flux:table.column>{{ __('Destination URL') }}</flux:table.column>
+            <flux:table.column>{{ __('Created At') }}</flux:table.column>
+        </flux:table.columns>
+        <flux:table.rows>
+            @foreach ($this->currentOrganization->links as $link)
+                <flux:table.row>
+                    <flux:table.cell>
+                        {{ url('/l/' . $link->id) }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        {{ $link->destination_url }}
+                    </flux:table.cell>
+                    <flux:table.cell>
+                        {{ $link->created_at->format('Y-m-d H:i') }}
+                    </flux:table.cell>
+                </flux:table.row>
+            @endforeach
+        </flux:table.rows>
+    </flux:table>
 </div>
