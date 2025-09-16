@@ -11,6 +11,10 @@ new class extends Component {
     #[Validate('required|url')]
     public string $destination_url = '';
 
+    public bool $use_custom_slug = false;
+    #[Validate('nullable|string|alpha_dash|unique:links,slug')]
+    public ?string $slug = null;
+
     #[Computed]
     public function currentOrganization()
     {
@@ -27,13 +31,20 @@ new class extends Component {
 
     public function createLink()
     {
-        $this->validate();
+        $rules = [
+            'destination_url' => 'required|url',
+        ];
+        if ($this->use_custom_slug) {
+            $rules['slug'] = 'required|string|alpha_dash|unique:links,slug';
+        }
+        $this->validate($rules);
 
         $this->currentOrganization->links()->create([
             'destination_url' => $this->destination_url,
+            'slug' => $this->use_custom_slug ? $this->slug : null,
         ]);
 
-        $this->reset('destination_url');
+        $this->reset('destination_url', 'slug', 'use_custom_slug');
 
         Flux::modal('create-link')->close();
 
@@ -69,13 +80,26 @@ new class extends Component {
                     <flux:heading size="lg">{{ __('Create Link') }}</flux:heading>
                     <flux:text class="mt-2">{{ __('Paste a long URL below to create a short link for your organization.') }}</flux:text>
                 </div>
-                <flux:input
+                 <flux:input
                     wire:model="destination_url"
                     name="destination_url"
                     type="url"
                     :label="__('Destination URL')"
                     :placeholder="__('Paste your long URL here')"
                     required
+                />
+                <flux:checkbox
+                    wire:model="use_custom_slug"
+                    name="use_custom_slug"
+                    :label="__('Use custom slug?')"
+                />
+                <flux:input
+                    wire:model="slug"
+                    name="slug"
+                    type="text"
+                    :label="__('Custom Slug')"
+                    :placeholder="__('e.g. my-link')"
+                    :disabled="!$this->use_custom_slug"
                 />
                 <div class="flex">
                     <flux:spacer />
@@ -97,7 +121,7 @@ new class extends Component {
             @foreach ($this->links as $link)
                 <flux:table.row>
                 <flux:table.cell>
-                    {{ url('/l/' . $link->hashed_id) }}
+                     {{ url('/l/' . ($link->slug ?? $link->hashed_id)) }}
                 </flux:table.cell>
                     <flux:table.cell>
                         {{ $link->destination_url }}

@@ -14,6 +14,18 @@ class Link extends Model
 
     protected $guarded = [];
 
+    /**
+     * Get the attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'slug' => 'string',
+        ];
+    }
+
     public function organization()
     {
         return $this->belongsTo(Organization::class);
