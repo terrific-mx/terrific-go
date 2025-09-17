@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -17,6 +19,18 @@ class Link extends Model
     public function organization()
     {
         return $this->belongsTo(Organization::class);
+    }
+
+    /**
+     * Scope a query to find by short id (slug or decoded hash).
+     */
+    #[Scope]
+    protected function byShortId(Builder $query, string $shortId): void
+    {
+        $decoded = (new Sqids())->decode($shortId);
+
+        $query->where('slug', $shortId)
+            ->orWhere('id', $decoded[0] ?? null);
     }
 
     /**
@@ -39,4 +53,3 @@ class Link extends Model
         );
     }
 }
-
