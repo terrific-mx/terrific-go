@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Sqids\Sqids;
 
 class Link extends Model
@@ -16,7 +17,10 @@ class Link extends Model
 
     protected $guarded = [];
 
-    public function organization()
+    /**
+     * Get the organization that owns the link.
+     */
+    public function organization(): BelongsTo
     {
         return $this->belongsTo(Organization::class);
     }
