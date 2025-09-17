@@ -11,10 +11,8 @@ use Laravel\Cashier\Billable;
 
 class Organization extends Model
 {
-    use Billable;
-
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
-    use HasFactory;
+    use HasFactory, Billable;
 
     protected $guarded = [];
 
