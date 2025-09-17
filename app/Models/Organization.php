@@ -6,32 +6,54 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 use Laravel\Cashier\Billable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Organization extends Model
 {
-    use Billable;
-
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
 
+    use Billable;
+
     protected $guarded = [];
 
-    public function links()
+    protected function casts(): array
+    {
+        return [
+            'personal' => 'boolean',
+        ];
+    }
+
+    /**
+     * Get the links for the organization.
+     */
+    public function links(): HasMany
     {
         return $this->hasMany(Link::class);
     }
 
-    public function user()
+    /**
+     * Get the user that owns the organization.
+     */
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function invitations()
+    /**
+     * Get the invitations for the organization.
+     */
+    public function invitations(): HasMany
     {
         return $this->hasMany(OrganizationInvitation::class);
     }
 
-    public function members()
+    /**
+     * Get the members of the organization.
+     */
+    public function members(): BelongsToMany
     {
         return $this->belongsToMany(User::class, 'organization_user');
     }
@@ -61,12 +83,5 @@ class Organization extends Model
         return $this->invitations()->create([
             'email' => $email,
         ]);
-    }
-
-    protected function casts(): array
-    {
-        return [
-            'personal' => 'boolean',
-        ];
     }
 }
