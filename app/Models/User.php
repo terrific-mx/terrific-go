@@ -52,18 +52,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's initials
-     */
-    public function initials(): string
-    {
-        return Str::of($this->name)
-            ->explode(' ')
-            ->take(2)
-            ->map(fn ($word) => Str::substr($word, 0, 1))
-            ->implode('');
-    }
-
-    /**
      * Get the organizations owned by the user.
      */
     public function organizations(): HasMany
@@ -71,9 +59,6 @@ class User extends Authenticatable
         return $this->hasMany(Organization::class);
     }
 
-    /**
-     * Organizations where the user is a member (not owner).
-     */
     /**
      * Organizations where the user is a member (not owner).
      */
@@ -93,9 +78,6 @@ class User extends Authenticatable
             ->values();
     }
 
-    /**
-     * Get the user's current organization.
-     */
     /**
      * Get the user's current organization.
      */
@@ -131,5 +113,17 @@ class User extends Authenticatable
         $this->current_organization_id = $organization->id;
 
         $this->save();
+    }
+
+    /**
+     * Get the user's initials
+     */
+    public function initials(): string
+    {
+        return Str::of($this->name)
+            ->explode(' ')
+            ->take(2)
+            ->map(fn ($word) => Str::substr($word, 0, 1))
+            ->implode('');
     }
 }
