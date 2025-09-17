@@ -8,6 +8,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
 use Laravel\Cashier\Billable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -60,7 +63,10 @@ class User extends Authenticatable
             ->implode('');
     }
 
-    public function organizations()
+    /**
+     * Get the organizations owned by the user.
+     */
+    public function organizations(): HasMany
     {
         return $this->hasMany(Organization::class);
     }
@@ -68,7 +74,10 @@ class User extends Authenticatable
     /**
      * Organizations where the user is a member (not owner).
      */
-    public function memberOrganizations()
+    /**
+     * Organizations where the user is a member (not owner).
+     */
+    public function memberOrganizations(): BelongsToMany
     {
         return $this->belongsToMany(Organization::class, 'organization_user');
     }
@@ -87,7 +96,10 @@ class User extends Authenticatable
     /**
      * Get the user's current organization.
      */
-    public function currentOrganization()
+    /**
+     * Get the user's current organization.
+     */
+    public function currentOrganization(): BelongsTo
     {
         if (is_null($this->current_organization_id)) {
             $this->assignPersonalOrganizationAsCurrent();
