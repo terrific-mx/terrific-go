@@ -4,9 +4,9 @@ namespace App\Models;
 
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Sqids\Sqids;
 
@@ -31,7 +31,7 @@ class Link extends Model
     #[Scope]
     protected function byShortId(Builder $query, string $shortId): void
     {
-        $decoded = (new Sqids())->decode($shortId);
+        $decoded = (new Sqids)->decode($shortId);
 
         $query->where('slug', $shortId)
             ->orWhere('id', $decoded[0] ?? null);
@@ -43,7 +43,7 @@ class Link extends Model
     protected function hashedId(): Attribute
     {
         return Attribute::make(
-            get: fn () => (new Sqids())->encode([$this->id]),
+            get: fn () => (new Sqids)->encode([$this->id]),
         );
     }
 

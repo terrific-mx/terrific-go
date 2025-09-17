@@ -1,8 +1,8 @@
 <?php
 
 use App\Models\Link;
-use Sqids\Sqids;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Sqids\Sqids;
 
 use function Pest\Laravel\get;
 
@@ -16,8 +16,8 @@ it('redirects a valid hash to the correct destination URL', function () {
     get("/l/{$link->hashed_id}")->assertRedirect('https://example.com');
 });
 
-it('returns a 404 for a nonexistent hash', function () {;
-    $hash = (new Sqids())->encode([999999]);
+it('returns a 404 for a nonexistent hash', function () {
+    $hash = (new Sqids)->encode([999999]);
 
     get("/l/{$hash}")->assertStatus(404);
 });

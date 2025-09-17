@@ -1,10 +1,10 @@
 <?php
 
 use App\Http\Controllers\LinkRedirectController;
+use App\Http\Controllers\OrganizationInvitationAcceptController;
 use App\Http\Middleware\EnsureUserIsSubscribed;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
-use App\Http\Controllers\OrganizationInvitationAcceptController;
 
 Route::get('/', function () {
     return view('welcome');

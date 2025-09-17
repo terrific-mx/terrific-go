@@ -4,18 +4,17 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
-use Laravel\Cashier\Billable;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Cashier\Billable;
 
 class Organization extends Model
 {
+    use Billable;
+
     /** @use HasFactory<\Database\Factories\OrganizationFactory> */
     use HasFactory;
-
-    use Billable;
 
     protected $guarded = [];
 
