@@ -58,11 +58,17 @@ class Organization extends Model
         return $this->belongsToMany(User::class, 'organization_user');
     }
 
+    /**
+     * Attach a user to the organization as a member.
+     */
     public function addMember(User $user): void
     {
         $this->members()->attach($user->id);
     }
 
+    /**
+     * Detach a user from the organization and clear their current organization if needed.
+     */
     public function removeMember(User $user): void
     {
         $this->members()->detach($user->id);
@@ -73,11 +79,17 @@ class Organization extends Model
         }
     }
 
+    /**
+     * Check if a user is a member of the organization.
+     */
     public function isMember(User $user): bool
     {
         return $this->members->contains($user);
     }
 
+    /**
+     * Create an invitation for a user to join the organization.
+     */
     public function inviteMember(string $email): OrganizationInvitation
     {
         return $this->invitations()->create([
