@@ -119,7 +119,7 @@ new class extends Component {
             @foreach ($this->links as $link)
                 <flux:table.row>
                 <flux:table.cell>
-                     {{ url('/l/' . ($link->slug ?? $link->hashed_id)) }}
+                     {{ url('/l/' . $link->short_id) }}
                 </flux:table.cell>
                     <flux:table.cell>
                         {{ $link->destination_url }}

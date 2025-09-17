@@ -28,4 +28,15 @@ class Link extends Model
             get: fn () => (new Sqids())->encode([$this->id]),
         );
     }
+
+    /**
+     * Get the short identifier for the link (slug or hashed id).
+     */
+    protected function shortId(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->slug ?? $this->hashed_id,
+        );
+    }
 }
+
